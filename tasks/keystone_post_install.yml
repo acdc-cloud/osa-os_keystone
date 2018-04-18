@@ -47,7 +47,7 @@
     - Restart uWSGI
     - Restart web server
 
-- name: Copy Keystone Federation SP SSO callback template
+- name: Copy Keystone Federation SP SSO callback template  (IdP Case)
   copy:
     src: "sso_callback_template.html"
     dest: "/etc/keystone/sso_callback_template.html"
@@ -56,6 +56,19 @@
     mode: "0644"
   when:
     - keystone_idp != {}
+  notify:
+    - Restart uWSGI
+    - Restart web server
+
+- name: Copy Keystone Federation SP SSO callback template (SP Case)
+  copy:
+    src: "sso_callback_template.html"
+    dest: "/etc/keystone/sso_callback_template.html"
+    owner: "{{ keystone_system_user_name }}"
+    group: "{{ keystone_system_group_name }}"
+    mode: "0644"
+  when:
+    - keystone_sp != {}
   notify:
     - Restart uWSGI
     - Restart web server
