@@ -72,13 +72,3 @@
   notify:
     - Restart uWSGI
     - Restart web server
-
-- name: Clean up Keystone Federation SP SSO callback template
-  file:
-    path: "/etc/keystone/sso_callback_template.html"
-    state: absent
-  when:
-    - keystone_idp == {}
-  notify:
-    - Restart uWSGI
-    - Restart web server
